@@ -3,7 +3,10 @@ const socket = require('socket.io');
 
 const app = express();
 
-const tasks = [];
+const tasks = [
+  {id: 1, name: 'Shopping'},
+  {id: 2, name: 'Go out with a dog'},
+];
 
 const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running...');

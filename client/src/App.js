@@ -14,9 +14,15 @@ class App extends React.Component {
 
   componentDidMount() {
     this.socket = io('localhost:8000');
-    this.socket.on('addTask', ({ id, name }) => this.addTask({ id: id, name: name }));
-    this.socket.on('removeTask', (id) => this.removeTask(id));
-    this.socket.on('updateData', (tasks) => this.updateTasks(tasks));
+    this.socket.on('updateData', tasks => {
+      this.updateTasks(tasks);
+    });
+    this.socket.on('addTask', task => {
+      this.addTask(task);
+    });
+    this.socket.on('removeTask', id => {
+      this.removeTask(id);
+    });
   }
 
   removeTask(id, isLocal) {
@@ -32,7 +38,7 @@ class App extends React.Component {
     e.preventDefault();
     const newTask = { name: this.state.taskName, id: uuidv4() };
     this.addTask(newTask);
-    this.socket.emit('addTask', this.state.taskName);
+    this.socket.emit('addTask', newTask);
   }
   
   addTask(task) {
@@ -69,7 +75,7 @@ class App extends React.Component {
             <input 
               className="text-input" 
               value={taskName} 
-              autocomplete="off" 
+              autoComplete="off" 
               type="text" 
               placeholder="Type your description" 
               id="task-name" 

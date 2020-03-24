@@ -26,7 +26,7 @@ io.on('connection', (socket) => {
   socket.on('removeTask', (index) => {
     console.log(`Task ${index} has been removed`);
     tasks.splice(index, 1);
-    socket.broadcast.emit('removeTask');
+    socket.broadcast.emit('removeTask', index);
   });
 })
 
